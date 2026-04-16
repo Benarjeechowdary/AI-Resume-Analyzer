@@ -9,3 +9,4 @@ scikit-learn
 streamlit
 langchain-text-splitters
 sentence-transformers
+pypdf
