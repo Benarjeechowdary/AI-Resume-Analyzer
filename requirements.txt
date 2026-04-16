@@ -1,10 +1,9 @@
 langchain
-langchain_community
-langchain_core
-langchain_groq
-langchain_huggingface
+langchain-community
+langchain-core
+langchain-groq
+langchain-huggingface
 pydantic
 python-dotenv
-scikit_learn
+scikit-learn ✅
 streamlit
-langchain.text_splitter
