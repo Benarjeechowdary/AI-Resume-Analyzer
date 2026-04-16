@@ -7,3 +7,4 @@ pydantic
 python-dotenv
 scikit_learn
 streamlit
+langchain.text_splitter
