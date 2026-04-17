@@ -29,7 +29,8 @@ def aggregate_results(results,job_role):
         items = final[key]
 
         # Step 2: take top frequent
-        items = get_top_k(items, k=6)
+        items = get_top_k(items, k=10)  # take more initially
+        items = remove_similar_items(items, emb_model)  # remove similar ones
 
         # Step 3: rank by job relevance
         
@@ -57,3 +58,26 @@ def rank_by_similarity(items, job_embedding, emb_model, k=3):
     ranked = sorted(zip(items, scores), key=lambda x: x[1], reverse=True)
     
     return [item for item, _ in ranked[:k]]
+
+
+
+def remove_similar_items(items, emb_model, threshold=0.80):
+    embeddings = emb_model.embed_documents(items)
+    
+    filtered_items = []
+
+    for i, emb in enumerate(embeddings):
+        keep = True
+        
+        for kept_item in filtered_items:
+            kept_emb = emb_model.embed_query(kept_item)
+            sim = cosine_similarity([emb], [kept_emb])[0][0]
+            
+            if sim > threshold:
+                keep = False
+                break
+        
+        if keep:
+            filtered_items.append(items[i])
+
+    return filtered_items
